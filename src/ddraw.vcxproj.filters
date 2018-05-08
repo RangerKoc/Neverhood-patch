@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ddraw">
+      <UniqueIdentifier>{d3fa741d-6704-47d3-9062-3291f9caa098}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="d3d">
+      <UniqueIdentifier>{9ee4ffae-a5de-4adc-be1c-65dee547c425}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="utils">
+      <UniqueIdentifier>{60bc8144-2cab-4d77-bcc8-72b2a779dcc5}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ddraw\ddraw\DirectDraw.cpp">
+      <Filter>ddraw</Filter>
+    </ClCompile>
+    <ClCompile Include="ddraw\ddraw\DirectDrawPalette.cpp">
+      <Filter>ddraw</Filter>
+    </ClCompile>
+    <ClCompile Include="ddraw\ddraw\DirectDrawSurface.cpp">
+      <Filter>ddraw</Filter>
+    </ClCompile>
+    <ClCompile Include="ddraw\main.cpp" />
+    <ClCompile Include="common\crt.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="common\tools.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ddraw\ddraw\DirectDraw.h">
+      <Filter>ddraw</Filter>
+    </ClInclude>
+    <ClInclude Include="ddraw\ddraw\DirectDrawPalette.h">
+      <Filter>ddraw</Filter>
+    </ClInclude>
+    <ClInclude Include="ddraw\ddraw\DirectDrawSurface.h">
+      <Filter>ddraw</Filter>
+    </ClInclude>
+    <ClInclude Include="ddraw\main.h" />
+    <ClInclude Include="ddraw\ddraw\ddraw.h">
+      <Filter>ddraw</Filter>
+    </ClInclude>
+    <ClInclude Include="ddraw\d3d\d3d9.h">
+      <Filter>d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="ddraw\d3d\d3d9caps.h">
+      <Filter>d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="ddraw\d3d\d3d9types.h">
+      <Filter>d3d</Filter>
+    </ClInclude>
+    <ClInclude Include="common\tools.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ddraw\exports.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="ddraw\res.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="ddraw\d3d\d3d9.lib">
+      <Filter>d3d</Filter>
+    </Library>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="nvhpatch\main.cpp" />
+    <ClCompile Include="nvhpatch\apihook.cpp" />
+    <ClCompile Include="common\crt.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="common\tools.cpp">
+      <Filter>utils</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="nvhpatch\main.h" />
+    <ClInclude Include="nvhpatch\apihook.h" />
+    <ClInclude Include="common\tools.h">
+      <Filter>utils</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="nvhpatch\exports.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="nvhpatch\res.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="utils">
+      <UniqueIdentifier>{9b1f9779-9810-4e6c-b997-966d1ca51acc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,9 @@
+LIBRARY "nvhpatch.dll"
+EXPORTS
+  RegCloseKey      = _RegCloseKey
+  RegCreateKeyExA  = _RegCreateKeyEx
+  RegDeleteKeyA    = _RegDeleteKey
+  RegEnumKeyA      = _RegEnumKey
+  RegOpenKeyExA    = _RegOpenKeyEx
+  RegQueryValueExA = _RegQueryValueEx
+  RegSetValueExA   = _RegSetValueEx

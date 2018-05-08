@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ddraw", "src\ddraw.vcxproj", "{DF2129CD-F3B3-498B-9547-FF584CB925E1}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "nvhpatch", "src\nvhpatch.vcxproj", "{DF2129CD-F3B3-498B-9547-FF584CB925E2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DF2129CD-F3B3-498B-9547-FF584CB925E1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E1}.Debug|Win32.Build.0 = Debug|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E1}.Release|Win32.ActiveCfg = Release|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E1}.Release|Win32.Build.0 = Release|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E2}.Debug|Win32.Build.0 = Debug|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E2}.Release|Win32.ActiveCfg = Release|Win32
+		{DF2129CD-F3B3-498B-9547-FF584CB925E2}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
