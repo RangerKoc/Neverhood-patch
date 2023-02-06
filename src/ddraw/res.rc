@@ -10,7 +10,7 @@
 #define VS_VERSION_INFO 1
 
 #define VERSIONINFO_CompanyName      "konst_s"
-#define VERSIONINFO_LegalCopyright   "© 2018, konst_s"
+#define VERSIONINFO_LegalCopyright   "© 2023, konst_s"
 
 #define VERSIONINFO_ProductName      "ddraw to d3d wrapper"
 
@@ -19,11 +19,11 @@
 #define VERSIONINFO_FileDescription  "ddraw wrapper for Neverhood"
 #define VERSIONINFO_OriginalFilename "ddraw.dll"
 
-#define VERSIONINFO_ProductVersion   "1.1"
-#define VERSIONINFO_FileVersion      "1.1"
+#define VERSIONINFO_ProductVersion   "1.2"
+#define VERSIONINFO_FileVersion      "1.2"
 
-#define VERSIONINFO_ProductVersionNumber   1,1,0,0
-#define VERSIONINFO_FileVersionNumber      1,1,0,0
+#define VERSIONINFO_ProductVersionNumber   1,2,0,0
+#define VERSIONINFO_FileVersionNumber      1,2,0,0
 
 // ----------------------------------------------------------------------------
 

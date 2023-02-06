@@ -64,6 +64,8 @@ struct render_t
 
   bool vsync;
   bool windowed;
+  bool windowedx2;
+  bool scanlines;
 
   bool smooth_scale;
   int  scale_mode;

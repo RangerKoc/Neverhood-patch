@@ -21,6 +21,7 @@
 enum scale_mode
 {
   scale_mode_original,
+  scale_mode_integer,
   scale_mode_aspect_ratio,
   scale_mode_stretch,
   scale_mode_manual,
@@ -77,11 +78,41 @@ BOOL WINAPI DllMain(HINSTANCE hInstance, DWORD fdwReason, LPVOID lpvReserved)
         g_render.cursor_scale = true;
         g_render.cursor_clip  = true;
 
-        g_render.smooth_scale = true;
+        //g_render.smooth_scale = true;
 
         //g_render.scale_mode = scale_mode_original;
-        g_render.scale_mode = scale_mode_aspect_ratio;
+        //g_render.scale_mode = scale_mode_integer;
+        //g_render.scale_mode = scale_mode_aspect_ratio;
         //g_render.scale_mode = scale_mode_stretch;
+
+        char app_dir[MAX_PATH], s[MAX_PATH];
+        get_app_dir(app_dir, sizeof(app_dir), true);
+
+        str_cpy(s, sizeof(s), app_dir);
+        str_cat(s, sizeof(s), "integer-scale.mode");
+        g_render.scale_mode = file_exists(s) ? scale_mode_integer : scale_mode_aspect_ratio;
+
+        str_cpy(s, sizeof(s), app_dir);
+        str_cat(s, sizeof(s), "disable-scale-filter.mode");
+        g_render.smooth_scale = !file_exists(s);
+
+        str_cpy(s, sizeof(s), app_dir);
+        str_cat(s, sizeof(s), "scanlines.mode");
+        g_render.scanlines = file_exists(s);
+
+        str_cpy(s, sizeof(s), app_dir);
+        str_cat(s, sizeof(s), "windowed2x.mode");
+        if (file_exists(s))
+        {
+          g_render.windowed = true;
+          g_render.windowedx2 = true;
+        }
+        else
+        {
+          str_cpy(s, sizeof(s), app_dir);
+          str_cat(s, sizeof(s), "windowed.mode");
+          g_render.windowed = file_exists(s);
+        }
 
         for (int i = 0; i < 4; i++)
         {
@@ -417,6 +448,12 @@ void window_init(void)
     rc.right  = g_render.screen_width;
     rc.bottom = g_render.screen_height;
 
+    if (g_render.windowedx2)
+    {
+      rc.right  *= 2;
+      rc.bottom *= 2;
+    }
+
     AdjustWindowRect(&rc, Style, FALSE);
 
     rc.right -= rc.left;
@@ -482,6 +519,31 @@ void update_rects(void)
       y1 = (g_render.screen_height - g_render.height) / 2;
       x2 = x1 + g_render.width;
       y2 = y1 + g_render.height;
+
+      break;
+    }
+
+    case scale_mode_integer:
+    {
+      int w = g_render.screen_width  / g_render.width;
+      int h = g_render.screen_height / g_render.height;
+
+      if (w < h)
+      {
+        h = g_render.height * w;
+        w = g_render.width  * w;
+      }
+      else
+      {
+        w = g_render.width  * h;
+        h = g_render.height * h;
+      }
+
+      x1 = (g_render.screen_width  - w) / 2;
+      y1 = (g_render.screen_height - h) / 2;
+      x2 = x1 + w;
+      y2 = y1 + h;
+
       break;
     }
 
@@ -498,6 +560,7 @@ void update_rects(void)
       y1 = (g_render.screen_height - y2) / 2;
       x2 += x1;
       y2 += y1;
+
       break;
     }
 
@@ -633,10 +696,10 @@ void reset_render(void)
   g_render.device->SetFVF(D3DFVF_XYZRHW | D3DFVF_DIFFUSE | D3DFVF_TEX1);
 
   //g_render.device->SetRenderState(D3DRS_LIGHTING, FALSE);
-  //g_render.device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
+  g_render.device->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
   //g_render.device->SetRenderState(D3DRS_ALPHATESTENABLE, TRUE);
-  //g_render.device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-  //g_render.device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+  g_render.device->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
+  g_render.device->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
   //g_render.device->SetRenderState(D3DRS_MULTISAMPLEANTIALIAS, TRUE);
   //g_render.device->SetRenderState(D3DRS_ANTIALIASEDLINEENABLE, TRUE);
   //g_render.device->SetRenderState(D3DRS_SCISSORTESTENABLE, TRUE);
@@ -748,22 +811,29 @@ void update_screen(void* buf)
   vertex[0].color = 0xff000000;
   vertex[0].x     = -0.5f;
   vertex[0].y     = -0.5f;
+  vertex[0].rhw   = 1.0f;
 
   vertex[1].color = vertex[0].color;
   vertex[1].x     = g_render.screen_width - 0.5f;
   vertex[1].y     = -0.5f;
+  vertex[1].rhw   = 1.0f;
 
   vertex[2].color = vertex[0].color;
   vertex[2].x     = g_render.screen_width - 0.5f;
   vertex[2].y     = g_render.screen_height - 0.5f;
+  vertex[2].rhw   = 1.0f;
 
   vertex[3].color = vertex[0].color;
   vertex[3].x     = -0.5f;
   vertex[3].y     = g_render.screen_height - 0.5f;
+  vertex[3].rhw   = 1.0f;
 
   vertex[4].color = vertex[0].color;
   vertex[4].x     = -0.5f;
   vertex[4].y     = -0.5f;
+  vertex[4].rhw   = 1.0f;
+
+  g_render.device->Clear(0, NULL, D3DCLEAR_TARGET, 0, 1.0f, 0);
 
   g_render.device->BeginScene();
 
@@ -772,6 +842,19 @@ void update_screen(void* buf)
   g_render.device->SetTexture(0, g_render.texture);
   g_render.device->DrawPrimitiveUP(D3DPT_TRIANGLEFAN, 2, g_render.vertex, sizeof(TLVERTEX));
   g_render.device->SetTexture(0, NULL);
+
+  if (g_render.scanlines && !g_render.windowed)
+  {
+    for (float y = g_render.vertex[0].y; y <= g_render.vertex[2].y; y += 2)
+    {
+      vertex[0].color = 0x5f000000;
+      vertex[0].y     = y;
+      vertex[1].color = vertex[0].color;
+      vertex[1].y     = y;
+
+      g_render.device->DrawPrimitiveUP(D3DPT_LINESTRIP, 1, vertex, sizeof(TLVERTEX));
+    }
+  }
 
   g_render.device->EndScene();
   g_render.device->Present(NULL, NULL, 0, NULL);
